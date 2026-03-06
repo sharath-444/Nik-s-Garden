@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  --color-garden-bg: #f5f3e7;
+  --color-garden-brown: #8b5a2b;
+  --font-caveat: 'Caveat', cursive;
+  --font-kalam: 'Kalam', cursive;
+}
+
+body {
+  background-color: var(--color-garden-bg);
+  font-family: var(--font-kalam);
+  margin: 0;
+  overflow-x: hidden;
+  color: #3d3b38;
+  transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+/* Night Mode Global Overrides */
+body.night-mode {
+  --color-garden-bg: #1a1e29;
+  --color-garden-brown: #d4a373;
+  color: #e5e1ca;
+}
+
+body.night-mode .bg-\[\#f5f3e7\] {
+  background-color: #1a1e29 !important;
+}
+
+body.night-mode .bg-white\/40,
+body.night-mode .bg-white {
+  background-color: rgba(30, 35, 45, 0.7) !important;
+  color: #e5e1ca !important;
+  border-color: #3c445c !important;
+}
+
+body.night-mode .text-\[\#8b5a2b\] {
+  color: #d4a373 !important;
+}
+
+body.night-mode canvas {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+}
+
+body.night-mode .shadow-sm,
+body.night-mode .shadow-lg,
+body.night-mode .shadow-2xl {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-garden-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d0bc;
+  border-radius: 4px;
+}
+
+body.night-mode ::-webkit-scrollbar-thumb {
+  background: #3c445c;
+}
