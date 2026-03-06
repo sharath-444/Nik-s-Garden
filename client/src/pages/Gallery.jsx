@@ -4,7 +4,8 @@ import { Heart, TrendingUp, Clock, Shuffle } from 'lucide-react';
 import { io } from 'socket.io-client';
 import { useAudio } from '../context/AudioContext';
 
-const SOCKET_URL = 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const SOCKET_URL = API_URL;
 
 const Gallery = () => {
     const [flowers, setFlowers] = useState([]);
@@ -38,8 +39,8 @@ const Gallery = () => {
     const fetchData = async () => {
         try {
             const [flowersRes, countRes] = await Promise.all([
-                fetch('http://localhost:5000/api/flowers'),
-                fetch('http://localhost:5000/api/flowers/count')
+                fetch(`${API_URL}/api/flowers`),
+                fetch(`${API_URL}/api/flowers/count`)
             ]);
 
             if (flowersRes.ok && countRes.ok) {
@@ -66,7 +67,7 @@ const Gallery = () => {
 
             playPopSound(); // gentle feedback
 
-            const res = await fetch(`http://localhost:5000/api/flowers/${id}/like`, {
+            const res = await fetch(`${API_URL}/api/flowers/${id}/like`, {
                 method: 'PUT'
             });
 

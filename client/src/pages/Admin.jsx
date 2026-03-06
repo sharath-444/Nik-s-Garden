@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { LayoutDashboard, MessageCircle, BarChart3, Database, RefreshCcw, Trash2 } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Admin = () => {
     const [messages, setMessages] = useState([]);
     const [stats, setStats] = useState(null);
@@ -16,8 +18,8 @@ const Admin = () => {
         setIsLoading(true);
         try {
             const [msgRes, statsRes] = await Promise.all([
-                fetch('http://localhost:5000/api/messages'),
-                fetch('http://localhost:5000/api/flowers/stats')
+                fetch(`${API_URL}/api/messages`),
+                fetch(`${API_URL}/api/flowers/stats`)
             ]);
             if (msgRes.ok && statsRes.ok) {
                 setMessages(await msgRes.json());

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, User, Mail, MessageSquare, CheckCircle } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Contact = () => {
     const [formData, setFormData] = useState({ name: '', email: '', text: '' });
     const [status, setStatus] = useState('idle'); // idle, sending, success, error
@@ -10,7 +12,7 @@ const Contact = () => {
         e.preventDefault();
         setStatus('sending');
         try {
-            const res = await fetch('http://localhost:5000/api/messages', {
+            const res = await fetch(`${API_URL}/api/messages`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)

@@ -5,7 +5,8 @@ import { Eraser, Send, Info, Users, Heart, Cloud, Wind, Thermometer, Bot, Refres
 import { useTheme } from '../context/ThemeContext';
 import { useAudio } from '../context/AudioContext';
 
-const SOCKET_URL = 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const SOCKET_URL = API_URL;
 
 const COLORS = [
     { name: 'Red', hex: '#ff4b4b' },
@@ -56,7 +57,7 @@ const Garden = () => {
         // Fetch initial flowers
         const fetchFlowers = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/flowers');
+                const res = await fetch(`${API_URL}/api/flowers`);
                 if (res.ok) {
                     const data = await res.json();
                     const positionedData = data.map(f => ({ ...f, pos: getRandomPosition(), isNew: false }));
@@ -103,7 +104,7 @@ const Garden = () => {
 
             playPopSound(); // gentle feedback
 
-            const res = await fetch(`http://localhost:5000/api/flowers/${id}/like`, {
+            const res = await fetch(`${API_URL}/api/flowers/${id}/like`, {
                 method: 'PUT'
             });
 
@@ -261,7 +262,7 @@ const Garden = () => {
         const imageData = canvasRef.current.toDataURL('image/png');
 
         try {
-            const res = await fetch('http://localhost:5000/api/flowers', {
+            const res = await fetch(`${API_URL}/api/flowers`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
