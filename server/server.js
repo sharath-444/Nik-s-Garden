@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -12,17 +13,19 @@ const server = http.createServer(app);
 // Enable CORS
 const io = new Server(server, {
     cors: {
-        origin: '*',
+        origin: process.env.CORS_ORIGIN || '*',
         methods: ['GET', 'POST']
     }
 });
 
-app.use(cors());
+app.use(cors({
+    origin: process.env.CORS_ORIGIN || '*'
+}));
 app.use(express.json({ limit: '10mb' })); // Allow large base64 image strings
 
 // MongoDB Connection
-// Note: using 127.0.0.1 avoids IPv6 issues with "localhost" on some Windows NodeJS versions
-mongoose.connect('mongodb://127.0.0.1:27017/digital_garden')
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/digital_garden';
+mongoose.connect(MONGODB_URI)
     .then(() => {
         console.log('Connected to MongoDB Digital Garden datastore');
     }).catch(err => console.error('MongoDB connection error:', err));
