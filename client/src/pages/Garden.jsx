@@ -1,4 +1,7 @@
-import { Eraser, Send, Info, Users, Heart, Cloud, Wind, Thermometer, Bot } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { io } from 'socket.io-client';
+import { Eraser, Send, Info, Users, Heart, Cloud, Wind, Thermometer, Bot, RefreshCcw } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useAudio } from '../context/AudioContext';
 
