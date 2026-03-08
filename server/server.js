@@ -25,10 +25,17 @@ app.use(express.json({ limit: '10mb' })); // Allow large base64 image strings
 
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/digital_garden';
+
+// Log the masked URI to verify it's being picked up correctly
+const maskedURI = MONGODB_URI.replace(/:([^@]+)@/, ':****@');
+console.log(`Attempting to connect to MongoDB: ${maskedURI}`);
+
 mongoose.connect(MONGODB_URI)
     .then(() => {
         console.log('Connected to MongoDB Digital Garden datastore');
-    }).catch(err => console.error('MongoDB connection error:', err));
+    }).catch(err => {
+        console.error('MongoDB connection error:', err);
+    });
 
 // Routes
 // Get all flowers
