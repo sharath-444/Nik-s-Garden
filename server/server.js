@@ -29,9 +29,17 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/digita
 // Detailed Diagnostics (Safe)
 console.log('--- MongoDB Connection Diagnostics ---');
 console.log('Total URI Length:', MONGODB_URI.length);
+console.log('Ends with space?', MONGODB_URI.endsWith(' ') ? 'YES' : 'NO');
+console.log('Starts with space?', MONGODB_URI.startsWith(' ') ? 'YES' : 'NO');
 console.log('Protocol exists:', MONGODB_URI.includes('://'));
 console.log('Protocol value:', MONGODB_URI.split('://')[0]);
 console.log('Contains @ separator:', MONGODB_URI.includes('@'));
+
+// Check for the slash before the query params
+const queryIndex = MONGODB_URI.indexOf('?');
+if (queryIndex !== -1) {
+    console.log('Character before ?: ', MONGODB_URI[queryIndex - 1]);
+}
 
 // Safely mask password for logging
 const maskedURI = MONGODB_URI.replace(/\/\/([^:]+):([^@]+)@/, '//$1:****@');
