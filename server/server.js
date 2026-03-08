@@ -37,6 +37,7 @@ app.get('/api/flowers', async (req, res) => {
         const flowers = await Flower.find().sort({ createdAt: -1 });
         res.json(flowers);
     } catch (error) {
+        console.error('Error fetching flowers:', error);
         res.status(500).json({ error: 'Failed to fetch flowers' });
     }
 });
@@ -47,6 +48,7 @@ app.get('/api/flowers/count', async (req, res) => {
         const count = await Flower.countDocuments();
         res.json({ count });
     } catch (error) {
+        console.error('Error fetching flower count:', error);
         res.status(500).json({ error: 'Failed to fetch flower count' });
     }
 });
@@ -90,6 +92,7 @@ app.put('/api/flowers/:id/like', async (req, res) => {
         io.emit('flower-liked', flower);
         res.json(flower);
     } catch (error) {
+        console.error('Error liking flower:', error);
         res.status(500).json({ error: 'Failed to like flower' });
     }
 });
@@ -105,6 +108,7 @@ app.get('/api/flowers/stats', async (req, res) => {
             mostLiked
         });
     } catch (error) {
+        console.error('Error fetching stats:', error);
         res.status(500).json({ error: 'Failed to fetch stats' });
     }
 });
@@ -120,6 +124,7 @@ app.post('/api/messages', async (req, res) => {
         await newMessage.save();
         res.status(201).json(newMessage);
     } catch (error) {
+        console.error('Error sending message:', error);
         res.status(500).json({ error: 'Failed to send message' });
     }
 });
@@ -130,6 +135,7 @@ app.get('/api/messages', async (req, res) => {
         const messages = await Message.find().sort({ createdAt: -1 });
         res.json(messages);
     } catch (error) {
+        console.error('Error fetching messages:', error);
         res.status(500).json({ error: 'Failed to fetch messages' });
     }
 });
