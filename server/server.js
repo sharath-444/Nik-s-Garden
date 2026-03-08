@@ -26,9 +26,17 @@ app.use(express.json({ limit: '10mb' })); // Allow large base64 image strings
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/digital_garden';
 
-// Log the masked URI to verify it's being picked up correctly
-const maskedURI = MONGODB_URI.replace(/:([^@]+)@/, ':****@');
-console.log(`Attempting to connect to MongoDB: ${maskedURI}`);
+// Detailed Diagnostics (Safe)
+console.log('--- MongoDB Connection Diagnostics ---');
+console.log('Total URI Length:', MONGODB_URI.length);
+console.log('Protocol exists:', MONGODB_URI.includes('://'));
+console.log('Protocol value:', MONGODB_URI.split('://')[0]);
+console.log('Contains @ separator:', MONGODB_URI.includes('@'));
+
+// Safely mask password for logging
+const maskedURI = MONGODB_URI.replace(/\/\/([^:]+):([^@]+)@/, '//$1:****@');
+console.log(`Connection target: ${maskedURI}`);
+console.log('--------------------------------------');
 
 mongoose.connect(MONGODB_URI)
     .then(() => {
